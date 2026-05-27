@@ -1,0 +1,879 @@
+final Result
+
+---------------- 96/96 -----------------
+
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.24 \
+  --use_revin \
+  \
+  --kernel_size 20 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 6 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-4 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+
+
+
+ETTh2
+---------------- 96/96 mse_mae loss sel20 -----------------
+Test Result | MSE:0.2911 | MAE:0.3467
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh2'
+data_path='./ETT/ETTh2.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --checkpoints_dir ./checkpoints_etth2_foreground \
+  --exp_name etth2_pl96_target270_msemae027_aux010_do034_ks26_glim018_lr36_sel20_noepoch \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.34 \
+  --use_revin \
+  --kernel_size 26 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_gamma_limit 0.18 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3.6e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 8 \
+  --min_lr 1e-6 \
+  --selection_metric mse \
+  --selection_start_epoch 20 \
+  --test_checkpoint best \
+  --eval_checkpoints selected \
+  --epochs 60 \
+  --patience 18 \
+  --min_delta 0 \
+  --loss_type mse_mae \
+  --mae_weight 0.27 \
+  --lambda_aux 0.10 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --no_epoch_test \
+  --seed 2023 \
+  --device 'cuda:0'
+
+
+
+ETTh2
+---------------- 96/96 mse_mae loss sel20 -----------------
+Test Result | MSE:0.2921 | MAE:0.3477
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh2'
+data_path='./ETT/ETTh2.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --checkpoints_dir ./checkpoints_etth2_foreground \
+  --exp_name etth2_pl96_target270_formal_msemae02_aux005_do034_glim018_lr36_sel20_noepochtest \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.34 \
+  --use_revin \
+  --kernel_size 30 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_gamma_limit 0.18 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3.6e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 8 \
+  --min_lr 1e-6 \
+  --selection_metric mse \
+  --selection_start_epoch 20 \
+  --test_checkpoint best \
+  --eval_checkpoints selected \
+  --epochs 60 \
+  --patience 18 \
+  --min_delta 0 \
+  --loss_type mse_mae \
+  --mae_weight 0.2 \
+  --lambda_aux 0.05 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --no_epoch_test \
+  --seed 2023 \
+  --device 'cuda:0'
+
+
+
+
+ETTh2
+---------------- 96/96 -----------------
+Test Result | MSE:0.2979 | MAE:0.3523
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh2'
+data_path='./ETT/ETTh2.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --checkpoints_dir ./checkpoints_etth2_foreground \
+  --exp_name etth2_pl96_valid_sel13_do032_aux001_wd5em04_lr3em04_md0 \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.32 \
+  --use_revin \
+  --kernel_size 30 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 8 \
+  --min_lr 1e-6 \
+  --selection_metric mse \
+  --selection_start_epoch 13 \
+  --test_checkpoint best \
+  --eval_checkpoints selected \
+  --epochs 60 \
+  --patience 18 \
+  --min_delta 0 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+---------------- 96/96 best checkpoint valid val -----------------
+Test Result | MSE:0.3117 | MAE:0.3561
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh2'
+data_path='./ETT/ETTh2.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name etth2_pl96_valid_reg_aux01_do030_wd002_lr2em04 \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.30 \
+  --use_revin \
+  --kernel_size 30 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 2e-4 \
+  --weight_decay 0.002 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 3 \
+  --min_lr 1e-6 \
+  --selection_metric mse \
+  --test_checkpoint best \
+  --eval_checkpoints selected \
+  --epochs 80 \
+  --patience 14 \
+  --min_delta 0 \
+  --lambda_aux 0.10 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+Test Result | MSE:0.3725 | MAE:0.4003
+
+
+
+---------------- 96/192 -----------------
+
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  \
+  --seq_len 96 \
+  --pred_len 192 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 6 \
+  --dropout 0.25 \
+  --use_revin \
+  \
+  --kernel_size 27 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 5 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-4 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+Test Result | MSE:0.4172 | MAE:0.4269
+
+
+---------------- 96/336 -----------------
+
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable_h4_do026_ks21_moe4 \
+  \
+  --seq_len 96 \
+  --pred_len 336 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 4 \
+  --dropout 0.26 \
+  --use_revin \
+  \
+  --kernel_size 21 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-4 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+  Test Result | MSE:0.4615 | MAE:0.4495
+
+
+---------------- 96/720 -----------------
+
+
+
+
+
+
+
+Real Result
+
+---------------- 96/96 -----------------
+best: MSE 0.3739 | MAE 0.4008
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.24 \
+  --use_revin \
+  --kernel_size 20 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 6 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --test_checkpoint best \
+  --eval_checkpoints both \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+---------------- 96/192 -----------------
+Test Result | MSE:0.4106 | MAE:0.4248
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  --seq_len 96 \
+  --pred_len 192 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 6 \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 6 \
+  --dropout 0.20 \
+  --use_revin \
+  \
+  --kernel_size 27 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 5 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 4 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 0.5 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-4 \
+  --lambda_aux 0.22 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+---------------- 96/336 -----------------
+Test Result | MSE:0.4674 | MAE:0.4502
+
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  --seq_len 96 \
+  --pred_len 336 \
+  --split_strategy ett \
+  --batch_size 48 \
+  --num_workers 6 \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 8 \
+  --dropout 0.24 \
+  --use_revin \
+  \
+  --kernel_size 15 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 8 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 2e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-5 \
+  --lambda_aux 0.05 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+
+---------------- 96/720 -----------------
+Test Result | MSE:0.4867 | MAE:0.4709
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh1'
+data_path='./ETT/ETTh1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  --seq_len 96 \
+  --pred_len 720 \
+  --split_strategy ett \
+  --batch_size 64 \
+  --num_workers 6 \
+  --in_channels 7 \
+  --d_model 12 \
+  --n_heads 12 \
+  --dropout 0.5 \
+  --use_revin \
+  \
+  --kernel_size 15 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 8 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 6 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 2e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 0.5 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 5e-5 \
+  --lambda_aux 1.6 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+
+
+
+
+ETTm1 Result
+
+---------------- 96/96 lambda_aux 0.0005 -----------------
+Test Result [best] | MSE:0.3272 | MAE:0.3642
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTm1'
+data_path='./ETT/ETTm1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ettm1_best_refine_aux00005_pl96_bs24_d24_h12_do02_ks12_moe4_base8_sig70_glim028_clip05_aux00005_mdosame_cdosame_wd00005_lr0000312 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.20 \
+  --use_revin \
+  \
+  --kernel_size 12 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_gamma_limit 0.28 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3.12e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 0.5 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --test_checkpoint best \
+  --eval_checkpoints both \
+  --epochs 50 \
+  --patience 5 \
+  --min_delta 0 \
+  --lambda_aux 0.0005 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+
+---------------- 96/96 lambda_aux 0.001 -----------------
+Test Result [best] | MSE:0.3272 | MAE:0.3643
+#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTm1'
+data_path='./ETT/ETTm1.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ettm1_best_refine_aux0001_pl96_bs24_d24_h12_do02_ks12_moe4_base8_sig70_glim028_clip05_aux0001_mdosame_cdosame_wd00005_lr0000312 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 4 \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.20 \
+  --use_revin \
+  \
+  --kernel_size 12 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 3 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_gamma_limit 0.28 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 3 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  \
+  --learning_rate 3.12e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 0.5 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --test_checkpoint best \
+  --eval_checkpoints both \
+  --epochs 50 \
+  --patience 5 \
+  --min_delta 0 \
+  --lambda_aux 0.001 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 0 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'
+
+
+
+
+ETTh2
+---------------- 96/96 -----------------
+Test Result | MSE:0.3128 | MAE:0.3547
+
+export CUDA_VISIBLE_DEVICES=0
+
+model_name='Hi-CSA'
+data_name='ETTh2'
+data_path='./ETT/ETTh2.csv'
+
+python run.py \
+  --model_name $model_name \
+  --data_name $data_name \
+  --data_path $data_path \
+  --exp_name ett_global_macro_stable \
+  \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 24 \
+  --num_workers 10 \
+  \
+  --in_channels 7 \
+  --d_model 24 \
+  --n_heads 12 \
+  --dropout 0.24 \
+  --use_revin \
+  --kernel_size 30 \
+  --num_experts 8 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --moe_k 4 \
+  --macro_mode individual \
+  --macro_scope global \
+  --fusion_mode cross_attention \
+  --decoder_type temporal \
+  --cross_gamma_init 0.0 \
+  --cross_attention_mode unidirectional \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --grad_clip 1.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --test_checkpoint best \
+  --eval_checkpoints both \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --lambda_aux 0.01 \
+  --lambda_gate_aux 0.001 \
+  --lambda_cross_gamma 0.0 \
+  --train_eval_batches 64 \
+  --ema_decay 0.1 \
+  --device 'cuda:0'

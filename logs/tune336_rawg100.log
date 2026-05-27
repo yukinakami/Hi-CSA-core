@@ -1,0 +1,7 @@
+>>> Script python: /d/anaconda/python.exe
+>>> Script seed: 2026
+>>> Script pred_len: 336
+>>> Script macro_pretrain_path: ./checkpoints/Hi-CSA-PretrainedMacroMoE/ETTh1/sl96_pl96_exp_raw_seasonal_lam005_g015/macro_pretrained_bank.pth
+>>> Script macro mode: semantic_moe + seasonal_fourier_linear
+>>> Script MoE: experts=4 | top_k=2 | seasonal_top_k=4 | router_temperature=1.0 | finetune=all
+>>> Script raw macro: fourier_k=1 | gamma=0.20/1.0 | lambda=0.2 | mae_weight=0.45
