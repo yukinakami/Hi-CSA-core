@@ -24,7 +24,7 @@ DATASET_PRESETS = {
 
 # Main ablation switch.
 # Set True to disable the Macro MoE branch and train/evaluate only the micro backbone.
-MICRO_ONLY = True
+MICRO_ONLY = False
 
 
 def get_dataset_preset(data_name):
@@ -79,6 +79,7 @@ def parse_args():
     parser.add_argument("--macro_gamma_init", type=float, default=0.01, help="Initial macro residual strength")
     parser.add_argument("--macro_gamma_max", type=float, default=0.1, help="Upper clamp for macro residual gamma")
     parser.add_argument("--macro_condition_max", type=float, default=0.3, help="Maximum FiLM conditioning magnitude for macro experts")
+    parser.add_argument("--macro_proj_init", type=str, default="zero", choices=["zero", "random", "identity"], help="Initialization for the macro projection")
     parser.add_argument("--residual_mode", type=str, default="feature", choices=["none", "output", "feature", "both"], help="Where to apply the initial-input residual")
     parser.add_argument("--micro_only", action="store_true", default=MICRO_ONLY, help="Disable Macro MoE and run only the micro backbone")
     parser.add_argument("--use_macro_moe", dest="micro_only", action="store_false", help="Enable Macro MoE even when MICRO_ONLY is True in run_macro_moe.py")
@@ -237,6 +238,7 @@ def main():
         macro_gamma_init=args.macro_gamma_init,
         macro_gamma_max=args.macro_gamma_max,
         macro_condition_max=args.macro_condition_max,
+        macro_proj_init=args.macro_proj_init,
         residual_mode=args.residual_mode,
         micro_only=args.micro_only,
         use_revin=args.use_revin,
@@ -252,6 +254,7 @@ def main():
         f"gamma_init={args.macro_gamma_init} | "
         f"gamma_max={args.macro_gamma_max} | "
         f"condition_max={args.macro_condition_max} | "
+        f"macro_proj_init={args.macro_proj_init} | "
         f"residual_mode={args.residual_mode} | "
         f"micro_only={args.micro_only}"
     )

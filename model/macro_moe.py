@@ -184,6 +184,7 @@ class MacroSeedMoE(nn.Module):
         gamma_init=0.0,
         gamma_max=0.1,
         condition_max=0.3,
+        macro_proj_init="zero",
     ):
         super().__init__()
         if num_experts <= 0:
@@ -215,8 +216,17 @@ class MacroSeedMoE(nn.Module):
             nn.Linear(d_model, d_model),
             nn.Dropout(dropout),
         )
-        nn.init.zeros_(self.macro_proj[1].weight)
-        nn.init.zeros_(self.macro_proj[1].bias)
+        if macro_proj_init == "zero":
+            nn.init.zeros_(self.macro_proj[1].weight)
+            nn.init.zeros_(self.macro_proj[1].bias)
+        elif macro_proj_init == "identity":
+            nn.init.eye_(self.macro_proj[1].weight)
+            nn.init.zeros_(self.macro_proj[1].bias)
+        elif macro_proj_init != "random":
+            raise ValueError(
+                "macro_proj_init must be one of ['random', 'zero', 'identity'], "
+                f"got {macro_proj_init}."
+            )
         gamma_init = min(max(float(gamma_init), 1e-5), self.gamma_max - 1e-5)
         gamma_ratio = gamma_init / self.gamma_max
         gamma_logit = torch.logit(torch.tensor(gamma_ratio))

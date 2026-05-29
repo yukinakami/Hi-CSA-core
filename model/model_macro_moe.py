@@ -30,6 +30,7 @@ class Hi_CSAMacroMoE(nn.Module):
         macro_gamma_init=0.01,
         macro_gamma_max=0.1,
         macro_condition_max=0.3,
+        macro_proj_init="zero",
         residual_mode="output",
         micro_only=False,
         use_revin=True,
@@ -81,6 +82,7 @@ class Hi_CSAMacroMoE(nn.Module):
             gamma_init=macro_gamma_init,
             gamma_max=macro_gamma_max,
             condition_max=macro_condition_max,
+            macro_proj_init=macro_proj_init,
         )
         self.decoder = TemporalDecoder(final_dim, seq_len, pred_len, in_channels, dropout)
         self.macro_decoder = TemporalDecoder(final_dim, seq_len, pred_len, in_channels, dropout)
