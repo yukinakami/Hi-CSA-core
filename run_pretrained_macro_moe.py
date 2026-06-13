@@ -22,6 +22,8 @@ DATASET_PRESETS = {
     "ETTm2": {"data_path": "./ETT/ETTm2.csv", "in_channels": 7, "split_strategy": "ett"},
     "weather": {"data_path": "./weather/weather.csv", "in_channels": 21, "split_strategy": "standard"},
     "electricity": {"data_path": "./electricity/electricity.csv", "in_channels": 321, "split_strategy": "standard"},
+    "traffic": {"data_path": "./traffic/traffic.csv", "in_channels": 862, "split_strategy": "standard"},
+    "exchange_rate": {"data_path": "./exchange_rate/exchange_rate.csv", "in_channels": 8, "split_strategy": "standard"},
 }
 
 # Main ablation switch for this second macro method. Default run uses macro;
@@ -132,7 +134,7 @@ def parse_args():
     parser.add_argument("--micro_only", action="store_true", default=MICRO_ONLY)
     parser.add_argument("--use_macro_moe", dest="micro_only", action="store_false")
 
-    parser.add_argument("--pretrain_epochs", type=int, default=80)
+    parser.add_argument("--pretrain_epochs", type=int, default=200)
     parser.add_argument("--pretrain_lr", type=float, default=1e-3)
     parser.add_argument("--pretrain_weight_decay", type=float, default=0.0)
     parser.add_argument("--pretrain_cosine_weight", type=float, default=0.1)

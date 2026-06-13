@@ -21,6 +21,8 @@ DATASET_PRESETS = {
     "ETTm2": {"data_path": "./ETT/ETTm2.csv", "in_channels": 7, "split_strategy": "ett"},
     "weather": {"data_path": "./weather/weather.csv", "in_channels": 21, "split_strategy": "standard"},
     "electricity": {"data_path": "./electricity/electricity.csv", "in_channels": 321, "split_strategy": "standard"},
+    "traffic": {"data_path": "./traffic/traffic.csv", "in_channels": 862, "split_strategy": "standard"},
+    "exchange_rate": {"data_path": "./exchange_rate/exchange_rate.csv", "in_channels": 8, "split_strategy": "standard"},
 }
 
 FORECAST_RESIDUAL_WEIGHT = 0.2

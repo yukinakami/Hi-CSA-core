@@ -5,63 +5,63 @@ export CUDA_VISIBLE_DEVICES=0
 
 /d/anaconda/python.exe run_pretrained_macro_moe.py \
   --model_name Hi-CSA-PretrainedMacroMoE \
-  --data_name weather \
-  --data_path ./weather/weather.csv \
-  --exp_name weather_pretrained_macro_moe_96 \
+  --data_name exchange_rate \
+  --data_path ./exchange_rate/exchange_rate.csv \
+  --exp_name exchange_rate_pretrained_macro_moe_96 \
   --seed 2026 \
   --seq_len 96 \
-  --pred_len 720 \
+  --pred_len 96 \
   --split_strategy standard \
   --batch_size 64 \
   --num_workers 0 \
-  --in_channels 21 \
+  --in_channels 8 \
   --d_model 24 \
-  --dropout 0.1 \
+  --dropout 0.2 \
   --use_revin \
   --kernel_size 21 \
   --flourier_k 3 \
   --gmm_k 4 \
   --num_gaussians 4 \
   --num_base 8 \
-  --max_sigma 70.0 \
+  --max_sigma 24.0 \
   --macro_num_experts 4 \
   --macro_top_k 2 \
-  --seasonal_top_k 8 \
-  --router_temperature 1.5 \
-  --macro_gamma_init 0.1 \
-  --macro_gamma_max 0.3 \
+  --seasonal_top_k 4 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.05 \
+  --macro_gamma_max 0.2 \
   --macro_proj_init random \
   --macro_fusion_mode residual \
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
-  --macro_raw_period 24 \
+  --macro_raw_period 7 \
   --macro_raw_fourier_k 1 \
-  --macro_raw_gamma_init 0.28 \
-  --macro_raw_gamma_max 1.4 \
+  --macro_raw_gamma_init 0.1 \
+  --macro_raw_gamma_max 0.6 \
   --residual_mode feature \
-  --macro_dropout 0.65 \
+  --macro_dropout 0.25 \
   --macro_target_projection_mode random \
   --pretrain_epochs 200 \
   --pretrain_lr 1e-3 \
   --pretrain_weight_decay 0.0 \
   --pretrain_cosine_weight 0.1 \
   --pretrained_finetune_mode all \
-  --lambda_load_balance 0.0 \
+  --lambda_load_balance 0.0005 \
   --lambda_router_z 0.0 \
   --lambda_router_entropy 0.0 \
   --lambda_expert_diversity 0.0 \
   --lambda_router_semantic 0.0 \
-  --lambda_macro_residual 0.2 \
+  --lambda_macro_residual 0.0 \
   --lambda_raw_macro_residual 0.1 \
-  --learning_rate 3e-4 \
-  --weight_decay 5e-3 \
+  --learning_rate 5e-4 \
+  --weight_decay 5e-4 \
   --loss_type mse_mae \
-  --mae_weight 2.5 \
+  --mae_weight 0.5 \
   --ema_decay 0.0 \
-  --lr_factor 0.95 \
-  --lr_patience 4 \
+  --lr_factor 0.5 \
+  --lr_patience 3 \
   --min_lr 1e-6 \
   --epochs 100 \
   --patience 8 \
-  --min_delta 0 \
+  --min_delta 0.0 \
   --device cuda:0

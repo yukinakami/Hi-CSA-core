@@ -1,7 +1,7 @@
 Result
-
+ETTh1
 ---------------- 96/96 -----------------
-
+MSE:0.3759 | MAE:0.3893
 
 #!/usr/bin/env bash
 set -e
@@ -12,16 +12,16 @@ export CUDA_VISIBLE_DEVICES=0
   --model_name Hi-CSA-PretrainedMacroMoE \
   --data_name ETTh1 \
   --data_path ./ETT/ETTh1.csv \
-  --exp_name ett_pretrained_macro_moe_restore_03783 \
+  --exp_name etth1_pretrained_macro_moe_bs64_dp020_mdp024_rg014_mae075_raw020 \
   --seed 2026 \
   --seq_len 96 \
   --pred_len 96 \
   --split_strategy ett \
-  --batch_size 24 \
+  --batch_size 64 \
   --num_workers 0 \
   --in_channels 7 \
   --d_model 24 \
-  --dropout 0.35 \
+  --dropout 0.20 \
   --use_revin \
   --kernel_size 21 \
   --flourier_k 3 \
@@ -30,25 +30,24 @@ export CUDA_VISIBLE_DEVICES=0
   --num_base 8 \
   --max_sigma 70.0 \
   --macro_num_experts 4 \
-  --macro_top_k 2 \
-  --seasonal_top_k 8 \
+  --macro_top_k 3 \
+  --seasonal_top_k 3 \
   --router_temperature 1.0 \
-  --macro_gamma_init 0.01 \
-  --macro_gamma_max 0.1 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.2 \
   --macro_proj_init random \
   --macro_fusion_mode residual \
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
   --macro_raw_period 24 \
   --macro_raw_fourier_k 1 \
-  --macro_raw_gamma_init 0.16 \
+  --macro_raw_gamma_init 0.14 \
   --macro_raw_gamma_max 0.8 \
   --residual_mode feature \
   --macro_dropout 0.24 \
   --macro_target_projection_mode random \
-  --macro_pretrain_path ./checkpoints/Hi-CSA-PretrainedMacroMoE/ETTh1/sl96_pl96_exp_raw_seasonal_lam005_g015/macro_pretrained_bank.pth \
   --pretrained_finetune_mode all \
-  --lambda_load_balance 0.0 \
+  --lambda_load_balance 0.0005 \
   --lambda_router_z 0.0 \
   --lambda_router_entropy 0.0 \
   --lambda_expert_diversity 0.0 \
@@ -58,7 +57,7 @@ export CUDA_VISIBLE_DEVICES=0
   --learning_rate 3e-4 \
   --weight_decay 5e-4 \
   --loss_type mse_mae \
-  --mae_weight 0.45 \
+  --mae_weight 0.75 \
   --ema_decay 0.0 \
   --lr_factor 0.3 \
   --lr_patience 4 \
@@ -69,8 +68,224 @@ export CUDA_VISIBLE_DEVICES=0
   --device cuda:0
 
 
+ ---------------- traffic 96/96 -----------------
+
+MSE:0.4547 | MAE:0.2872
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_96_p12_k31_s48_lr7e4_mae20_lraw1_dp005_wd0_md2e3_bs4 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy standard \
+  --batch_size 4 \
+  --num_workers 0 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
+  --use_revin \
+  --kernel_size 31 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 48.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 4 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.30 \
+  --macro_raw_gamma_max 1.0 \
+  --residual_mode feature \
+  --macro_dropout 0.20 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 5e-4 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.0 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 7e-4 \
+  --weight_decay 0.0 \
+  --loss_type mse_mae \
+  --mae_weight 20.0 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 3 \
+  --min_delta 0.002 \
+  --device cuda:0
+
+
+ ---------------- traffic 96/192 -----------------
+
+MSE:0.4703 | MAE:0.2927
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_192_p12_k31_s48_lr7e4_mae30_lraw1_dp005_wd0_md2e3_bs4_rg0125 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 192 \
+  --split_strategy standard \
+  --batch_size 4 \
+  --num_workers 0 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
+  --use_revin \
+  --kernel_size 31 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 48.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 4 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.125 \
+  --macro_raw_gamma_max 1.0 \
+  --residual_mode feature \
+  --macro_dropout 0.20 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 5e-4 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.0 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 7e-4 \
+  --weight_decay 0.0 \
+  --loss_type mse_mae \
+  --mae_weight 30.0 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 3 \
+  --min_delta 0.002 \
+  --device cuda:0
+
+
+ ---------------- traffic 96/336 -----------------
+
+MSE:0.4825 | MAE:0.2995
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_336_p12_k47_s48_lr7e4_mae30_lraw1_dp005_wd0_md0_bs8_rg03 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 336 \
+  --split_strategy standard \
+  --batch_size 8 \
+  --num_workers 0 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
+  --use_revin \
+  --kernel_size 47 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 48.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 4 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.30 \
+  --macro_raw_gamma_max 1.0 \
+  --residual_mode feature \
+  --macro_dropout 0.20 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 5e-4 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.0 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 7e-4 \
+  --weight_decay 0.0 \
+  --loss_type mse_mae \
+  --mae_weight 30.0 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 3 \
+  --min_delta 0.0 \
+  --device cuda:0
+
 
   ---------------- 96/192 -----------------
+  MSE:0.4241 | MAE:0.4150
 
   #!/usr/bin/env bash
 set -e
@@ -135,5 +350,518 @@ export CUDA_VISIBLE_DEVICES=0
   --epochs 5 \
   --patience 8 \
   --min_delta 0 \
+  --device cuda:0
+
+  ETTm1
+  ---------------- 96/96 -----------------
+  MSE:0.3277 | MAE:0.3626
+
+  #!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name ETTm1 \
+  --data_path ./ETT/ETTm1.csv \
+  --exp_name ett_pretrained_macro_moe_restore_03783 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy ett \
+  --batch_size 128 \
+  --num_workers 0 \
+  --in_channels 7 \
+  --d_model 24 \
+  --dropout 0.3 \
+  --use_revin \
+  --kernel_size 21 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 3 \
+  --seasonal_top_k 3 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.2 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 24 \
+  --macro_raw_fourier_k 1 \
+  --macro_raw_gamma_init 0.16 \
+  --macro_raw_gamma_max 0.8 \
+  --residual_mode feature \
+  --macro_dropout 0.24 \
+  --macro_target_projection_mode random \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 0.2 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-4 \
+  --loss_type mse_mae \
+  --mae_weight 0.45 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --device cuda:0
+
+
+
+
+
+  weather
+  ---------------- 96/96 -----------------
+
+  MSE:0.1542 | MAE:0.2011
+
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+  #!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name weather \
+  --data_path ./weather/weather.csv \
+  --exp_name weather_pretrained_macro_moe_96 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy standard \
+  --batch_size 128 \
+  --num_workers 0 \
+  --in_channels 21 \
+  --d_model 24 \
+  --dropout 0.2 \
+  --use_revin \
+  --kernel_size 21 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 2 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.5 \
+  --macro_gamma_init 0.01 \
+  --macro_gamma_max 0.1 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 24 \
+  --macro_raw_fourier_k 1 \
+  --macro_raw_gamma_init 0.16 \
+  --macro_raw_gamma_max 0.8 \
+  --residual_mode feature \
+  --macro_dropout 0.4 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 1e-3 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.1 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 0.2 \
+  --learning_rate 4e-4 \
+  --weight_decay 5e-3 \
+  --loss_type mse_mae \
+  --mae_weight 0.7 \
+  --ema_decay 0.0 \
+  --lr_factor 0.93 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --device cuda:0
+
+   ---------------- 96/192 -----------------
+   MSE:0.2027 | MAE:0.2446
+
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name weather \
+  --data_path ./weather/weather.csv \
+  --exp_name weather_pretrained_macro_moe_96 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 192 \
+  --split_strategy standard \
+  --batch_size 256 \
+  --num_workers 0 \
+  --in_channels 21 \
+  --d_model 16 \
+  --dropout 0.38 \
+  --use_revin \
+  --kernel_size 21 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 2 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.5 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 24 \
+  --macro_raw_fourier_k 1 \
+  --macro_raw_gamma_init 0.16 \
+  --macro_raw_gamma_max 0.8 \
+  --residual_mode feature \
+  --macro_dropout 0.4 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 1e-3 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.1 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 0.2 \
+  --learning_rate 4e-4 \
+  --weight_decay 5e-3 \
+  --loss_type mse_mae \
+  --mae_weight 0.7 \
+  --ema_decay 0.0 \
+  --lr_factor 0.95 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --device cuda:0
+
+
+ ---------------- 96/336 -----------------
+ MSE:0.2607 | MAE:0.2867
+
+
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name weather \
+  --data_path ./weather/weather.csv \
+  --exp_name weather_pretrained_macro_moe_96 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 336 \
+  --split_strategy standard \
+  --batch_size 256 \
+  --num_workers 0 \
+  --in_channels 21 \
+  --d_model 24 \
+  --dropout 0.1 \
+  --use_revin \
+  --kernel_size 21 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 2 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.5 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 24 \
+  --macro_raw_fourier_k 1 \
+  --macro_raw_gamma_init 0.28 \
+  --macro_raw_gamma_max 1.4 \
+  --residual_mode feature \
+  --macro_dropout 0.62 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 1e-3 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.1 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.2 \
+  --lambda_raw_macro_residual 0.1 \
+  --learning_rate 4e-4 \
+  --weight_decay 5e-3 \
+  --loss_type mse_mae \
+  --mae_weight 1.5 \
+  --ema_decay 0.0 \
+  --lr_factor 0.95 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --device cuda:0
+
+
+ ---------------- 96/720 -----------------
+ MSE:0.3375 | MAE:0.3347
+
+
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name weather \
+  --data_path ./weather/weather.csv \
+  --exp_name weather_pretrained_macro_moe_96 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 720 \
+  --split_strategy standard \
+  --batch_size 64 \
+  --num_workers 0 \
+  --in_channels 21 \
+  --d_model 24 \
+  --dropout 0.1 \
+  --use_revin \
+  --kernel_size 21 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 2 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.5 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 24 \
+  --macro_raw_fourier_k 1 \
+  --macro_raw_gamma_init 0.28 \
+  --macro_raw_gamma_max 1.4 \
+  --residual_mode feature \
+  --macro_dropout 0.65 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 1e-3 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.1 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.2 \
+  --lambda_raw_macro_residual 0.1 \
+  --learning_rate 3e-4 \
+  --weight_decay 5e-3 \
+  --loss_type mse_mae \
+  --mae_weight 2.5 \
+  --ema_decay 0.0 \
+  --lr_factor 0.95 \
+  --lr_patience 4 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 8 \
+  --min_delta 0 \
+  --device cuda:0
+
+
+traffic
+
+---------------- 96/96 -----------------
+0.4584 / 0.2881
+
+#!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_96_p12_k31_s48_lr7e4_mae20_lraw1_dp005_wd0_md0 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 96 \
+  --split_strategy standard \
+  --batch_size 8 \
+  --num_workers 0 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
+  --use_revin \
+  --kernel_size 31 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 48.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 4 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.30 \
+  --macro_raw_gamma_max 1.0 \
+  --residual_mode feature \
+  --macro_dropout 0.20 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 5e-4 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.0 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 7e-4 \
+  --weight_decay 0.0 \
+  --loss_type mse_mae \
+  --mae_weight 20.0 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 3 \
+  --min_delta 0.0 \
+  --device cuda:0
+
+
+ ---------------- 96/720 -----------------
+
+MSE:0.5212 | MAE:0.3176
+  #!/usr/bin/env bash
+set -e
+
+export CUDA_VISIBLE_DEVICES=0
+
+/d/anaconda/python.exe run_pretrained_macro_moe.py \
+  --model_name Hi-CSA-PretrainedMacroMoE \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_720_k47_s70_lr8e4_mae30_lraw1_dp005_wd0_pat3 \
+  --seed 2026 \
+  --seq_len 96 \
+  --pred_len 720 \
+  --split_strategy standard \
+  --batch_size 16 \
+  --num_workers 0 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
+  --use_revin \
+  --kernel_size 47 \
+  --flourier_k 3 \
+  --gmm_k 4 \
+  --num_gaussians 4 \
+  --num_base 8 \
+  --max_sigma 70.0 \
+  --macro_num_experts 4 \
+  --macro_top_k 4 \
+  --seasonal_top_k 8 \
+  --router_temperature 1.0 \
+  --macro_gamma_init 0.1 \
+  --macro_gamma_max 0.3 \
+  --macro_proj_init random \
+  --macro_fusion_mode residual \
+  --use_macro_moe \
+  --macro_raw_residual_mode seasonal_fourier_linear \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.30 \
+  --macro_raw_gamma_max 1.0 \
+  --residual_mode feature \
+  --macro_dropout 0.20 \
+  --macro_target_projection_mode random \
+  --pretrain_epochs 200 \
+  --pretrain_lr 5e-4 \
+  --pretrain_weight_decay 0.0 \
+  --pretrain_cosine_weight 0.0 \
+  --pretrained_finetune_mode all \
+  --lambda_load_balance 0.0005 \
+  --lambda_router_z 0.0 \
+  --lambda_router_entropy 0.0 \
+  --lambda_expert_diversity 0.0 \
+  --lambda_router_semantic 0.0 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 3e-4 \
+  --weight_decay 0.0 \
+  --loss_type mse_mae \
+  --mae_weight 30.0 \
+  --ema_decay 0.0 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
+  --min_lr 1e-6 \
+  --epochs 100 \
+  --patience 3 \
+  --min_delta 0.002 \
   --device cuda:0
 

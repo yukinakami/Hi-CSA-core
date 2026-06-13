@@ -5,63 +5,63 @@ export CUDA_VISIBLE_DEVICES=0
 
 /d/anaconda/python.exe run_pretrained_macro_moe.py \
   --model_name Hi-CSA-PretrainedMacroMoE \
-  --data_name weather \
-  --data_path ./weather/weather.csv \
-  --exp_name weather_pretrained_macro_moe_96 \
+  --data_name traffic \
+  --data_path ./traffic/traffic.csv \
+  --exp_name traffic_pretrained_macro_moe_336_p12_k47_s48_lr7e4_mae30_lraw1_dp005_wd0_md0_bs8_rg03 \
   --seed 2026 \
   --seq_len 96 \
-  --pred_len 720 \
+  --pred_len 336 \
   --split_strategy standard \
-  --batch_size 64 \
+  --batch_size 8 \
   --num_workers 0 \
-  --in_channels 21 \
-  --d_model 24 \
-  --dropout 0.1 \
+  --in_channels 862 \
+  --d_model 32 \
+  --dropout 0.05 \
   --use_revin \
-  --kernel_size 21 \
+  --kernel_size 47 \
   --flourier_k 3 \
   --gmm_k 4 \
   --num_gaussians 4 \
   --num_base 8 \
-  --max_sigma 70.0 \
+  --max_sigma 48.0 \
   --macro_num_experts 4 \
-  --macro_top_k 2 \
+  --macro_top_k 4 \
   --seasonal_top_k 8 \
-  --router_temperature 1.5 \
+  --router_temperature 1.0 \
   --macro_gamma_init 0.1 \
   --macro_gamma_max 0.3 \
   --macro_proj_init random \
   --macro_fusion_mode residual \
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
-  --macro_raw_period 24 \
-  --macro_raw_fourier_k 1 \
-  --macro_raw_gamma_init 0.28 \
-  --macro_raw_gamma_max 1.4 \
+  --macro_raw_period 12 \
+  --macro_raw_fourier_k 2 \
+  --macro_raw_gamma_init 0.30 \
+  --macro_raw_gamma_max 1.0 \
   --residual_mode feature \
-  --macro_dropout 0.65 \
+  --macro_dropout 0.20 \
   --macro_target_projection_mode random \
   --pretrain_epochs 200 \
-  --pretrain_lr 1e-3 \
+  --pretrain_lr 5e-4 \
   --pretrain_weight_decay 0.0 \
-  --pretrain_cosine_weight 0.1 \
+  --pretrain_cosine_weight 0.0 \
   --pretrained_finetune_mode all \
-  --lambda_load_balance 0.0 \
+  --lambda_load_balance 0.0005 \
   --lambda_router_z 0.0 \
   --lambda_router_entropy 0.0 \
   --lambda_expert_diversity 0.0 \
   --lambda_router_semantic 0.0 \
-  --lambda_macro_residual 0.2 \
-  --lambda_raw_macro_residual 0.1 \
-  --learning_rate 3e-4 \
-  --weight_decay 5e-3 \
+  --lambda_macro_residual 0.0 \
+  --lambda_raw_macro_residual 1.0 \
+  --learning_rate 7e-4 \
+  --weight_decay 0.0 \
   --loss_type mse_mae \
-  --mae_weight 2.5 \
+  --mae_weight 30.0 \
   --ema_decay 0.0 \
-  --lr_factor 0.95 \
-  --lr_patience 4 \
+  --lr_factor 0.3 \
+  --lr_patience 2 \
   --min_lr 1e-6 \
   --epochs 100 \
-  --patience 8 \
-  --min_delta 0 \
+  --patience 3 \
+  --min_delta 0.0 \
   --device cuda:0

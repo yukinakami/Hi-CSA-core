@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+checkpoints/
+logs/
+
+# Large local benchmark data not distributed with this repository.
+data/traffic/traffic.csv
+data/illness/
+data/m4/

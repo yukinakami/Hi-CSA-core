@@ -7,19 +7,19 @@ export CUDA_VISIBLE_DEVICES=0
   --model_name Hi-CSA-PretrainedMacroMoE \
   --data_name ETTh1 \
   --data_path ./ETT/ETTh1.csv \
-  --exp_name ett_pretrained_macro_moe_restore_03783 \
+  --exp_name etth1_pl336_tune_fk6_bs44_dp055_mdp040_both_mae300_lr32e5_wd4e4_raw005_rg011_rfk0 \
   --seed 2026 \
   --seq_len 96 \
-  --pred_len 96 \
+  --pred_len 336 \
   --split_strategy ett \
-  --batch_size 24 \
+  --batch_size 44 \
   --num_workers 0 \
   --in_channels 7 \
   --d_model 24 \
-  --dropout 0.35 \
+  --dropout 0.55 \
   --use_revin \
   --kernel_size 21 \
-  --flourier_k 3 \
+  --flourier_k 6 \
   --gmm_k 4 \
   --num_gaussians 4 \
   --num_base 8 \
@@ -35,13 +35,12 @@ export CUDA_VISIBLE_DEVICES=0
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
   --macro_raw_period 24 \
-  --macro_raw_fourier_k 1 \
-  --macro_raw_gamma_init 0.16 \
+  --macro_raw_fourier_k 0 \
+  --macro_raw_gamma_init 0.11 \
   --macro_raw_gamma_max 0.8 \
-  --residual_mode feature \
-  --macro_dropout 0.24 \
+  --residual_mode both \
+  --macro_dropout 0.40 \
   --macro_target_projection_mode random \
-  --macro_pretrain_path ./checkpoints/Hi-CSA-PretrainedMacroMoE/ETTh1/sl96_pl96_exp_raw_seasonal_lam005_g015/macro_pretrained_bank.pth \
   --pretrained_finetune_mode all \
   --lambda_load_balance 0.0 \
   --lambda_router_z 0.0 \
@@ -49,11 +48,11 @@ export CUDA_VISIBLE_DEVICES=0
   --lambda_expert_diversity 0.0 \
   --lambda_router_semantic 0.0 \
   --lambda_macro_residual 0.0 \
-  --lambda_raw_macro_residual 0.2 \
-  --learning_rate 3e-4 \
-  --weight_decay 5e-4 \
+  --lambda_raw_macro_residual 0.05 \
+  --learning_rate 3.2e-4 \
+  --weight_decay 4e-4 \
   --loss_type mse_mae \
-  --mae_weight 0.45 \
+  --mae_weight 3.0 \
   --ema_decay 0.0 \
   --lr_factor 0.3 \
   --lr_patience 4 \
