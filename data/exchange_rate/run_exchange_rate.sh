@@ -7,40 +7,40 @@ export CUDA_VISIBLE_DEVICES=0
   --model_name Hi-CSA-PretrainedMacroMoE \
   --data_name exchange_rate \
   --data_path ./exchange_rate/exchange_rate.csv \
-  --exp_name exchange_rate_pretrained_macro_moe_96 \
+  --exp_name exchange_rate_pretrained_macro_moe_720_best \
   --seed 2026 \
   --seq_len 96 \
-  --pred_len 96 \
+  --pred_len 720 \
   --split_strategy standard \
   --batch_size 64 \
   --num_workers 0 \
   --in_channels 8 \
   --d_model 24 \
-  --dropout 0.2 \
+  --dropout 0.0 \
   --use_revin \
-  --kernel_size 21 \
+  --kernel_size 15 \
   --flourier_k 3 \
   --gmm_k 4 \
   --num_gaussians 4 \
   --num_base 8 \
-  --max_sigma 24.0 \
+  --max_sigma 12.0 \
   --macro_num_experts 4 \
   --macro_top_k 2 \
   --seasonal_top_k 4 \
   --router_temperature 1.0 \
-  --macro_gamma_init 0.05 \
-  --macro_gamma_max 0.2 \
-  --macro_proj_init random \
+  --macro_gamma_init 0.30 \
+  --macro_gamma_max 1.0 \
+  --macro_proj_init identity \
   --macro_fusion_mode residual \
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
-  --macro_raw_period 7 \
-  --macro_raw_fourier_k 1 \
-  --macro_raw_gamma_init 0.1 \
-  --macro_raw_gamma_max 0.6 \
+  --macro_raw_period 1 \
+  --macro_raw_fourier_k 0 \
+  --macro_raw_gamma_init 0.8 \
+  --macro_raw_gamma_max 1.4 \
   --residual_mode feature \
-  --macro_dropout 0.25 \
-  --macro_target_projection_mode random \
+  --macro_dropout 0.6 \
+  --macro_target_projection_mode repeat \
   --pretrain_epochs 200 \
   --pretrain_lr 1e-3 \
   --pretrain_weight_decay 0.0 \
@@ -53,10 +53,10 @@ export CUDA_VISIBLE_DEVICES=0
   --lambda_router_semantic 0.0 \
   --lambda_macro_residual 0.0 \
   --lambda_raw_macro_residual 0.1 \
-  --learning_rate 5e-4 \
-  --weight_decay 5e-4 \
+  --learning_rate 1.5e-3 \
+  --weight_decay 0.0 \
   --loss_type mse_mae \
-  --mae_weight 0.5 \
+  --mae_weight 1.5 \
   --ema_decay 0.0 \
   --lr_factor 0.5 \
   --lr_patience 3 \
