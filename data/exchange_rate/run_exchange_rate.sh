@@ -7,7 +7,7 @@ export CUDA_VISIBLE_DEVICES=0
   --model_name Hi-CSA-PretrainedMacroMoE \
   --data_name exchange_rate \
   --data_path ./exchange_rate/exchange_rate.csv \
-  --exp_name exchange_rate_pretrained_macro_moe_720_best \
+  --exp_name exchange_rate_pretrained_macro_moe_720_k11_s8_best \
   --seed 2026 \
   --seq_len 96 \
   --pred_len 720 \
@@ -18,26 +18,26 @@ export CUDA_VISIBLE_DEVICES=0
   --d_model 24 \
   --dropout 0.0 \
   --use_revin \
-  --kernel_size 15 \
+  --kernel_size 11 \
   --flourier_k 3 \
   --gmm_k 4 \
   --num_gaussians 4 \
   --num_base 8 \
-  --max_sigma 12.0 \
+  --max_sigma 8.0 \
   --macro_num_experts 4 \
   --macro_top_k 2 \
   --seasonal_top_k 4 \
   --router_temperature 1.0 \
-  --macro_gamma_init 0.30 \
-  --macro_gamma_max 1.0 \
+  --macro_gamma_init 0.36 \
+  --macro_gamma_max 0.48 \
   --macro_proj_init identity \
   --macro_fusion_mode residual \
   --use_macro_moe \
   --macro_raw_residual_mode seasonal_fourier_linear \
   --macro_raw_period 1 \
   --macro_raw_fourier_k 0 \
-  --macro_raw_gamma_init 0.8 \
-  --macro_raw_gamma_max 1.4 \
+  --macro_raw_gamma_init 0.82 \
+  --macro_raw_gamma_max 1.0 \
   --residual_mode feature \
   --macro_dropout 0.6 \
   --macro_target_projection_mode repeat \
@@ -56,7 +56,7 @@ export CUDA_VISIBLE_DEVICES=0
   --learning_rate 1.5e-3 \
   --weight_decay 0.0 \
   --loss_type mse_mae \
-  --mae_weight 1.5 \
+  --mae_weight 1.75 \
   --ema_decay 0.0 \
   --lr_factor 0.5 \
   --lr_patience 3 \

@@ -119,23 +119,23 @@ Status: target exceeded
 
 ---------------- 96/720 ----------------
 Target MSE/MAE: 0.716 / 0.674
-Best MSE/MAE:   0.8122 / 0.6815
+Best MSE/MAE:   0.7991 / 0.6755
 Status: target not met under the fixed feature-residual structure
 
   --pred_len 720
   --batch_size 64
   --dropout 0.0
-  --kernel_size 15
-  --max_sigma 12.0
-  --macro_gamma_init 0.30
-  --macro_gamma_max 1.0
+  --kernel_size 11
+  --max_sigma 8.0
+  --macro_gamma_init 0.36
+  --macro_gamma_max 0.48
   --macro_proj_init identity
   --macro_raw_period 1
   --macro_raw_fourier_k 0
-  --macro_raw_gamma_init 0.8
-  --macro_raw_gamma_max 1.4
+  --macro_raw_gamma_init 0.82
+  --macro_raw_gamma_max 1.0
   --macro_dropout 0.6
   --macro_target_projection_mode repeat
   --learning_rate 1.5e-3
   --weight_decay 0.0
-  --mae_weight 1.5
+  --mae_weight 1.75
