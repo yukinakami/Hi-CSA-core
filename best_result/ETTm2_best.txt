@@ -1,0 +1,79 @@
+ETTm2 benchmark
+Model: Hi-CSA-PretrainedMacroMoE
+Seed: 2026
+Input length: 96
+Split: ett
+Save criterion: validation MSE
+
+Common parameters:
+  --data_name ETTm2
+  --data_path ./ETT/ETTm2.csv
+  --seq_len 96
+  --split_strategy ett
+  --batch_size 44
+  --num_workers 0
+  --in_channels 7
+  --d_model 24
+  --dropout 0.55
+  --use_revin
+  --kernel_size 21
+  --flourier_k 6
+  --gmm_k 4
+  --num_gaussians 4
+  --num_base 8
+  --max_sigma 21.0
+  --macro_num_experts 4
+  --macro_top_k 2
+  --seasonal_top_k 8
+  --router_temperature 1.0
+  --macro_gamma_init 0.01
+  --macro_gamma_max 0.1
+  --macro_proj_init random
+  --macro_fusion_mode residual
+  --use_macro_moe
+  --macro_raw_residual_mode seasonal_fourier_linear
+  --macro_raw_period 24
+  --macro_raw_fourier_k 0
+  --macro_raw_gamma_init 0.11
+  --macro_raw_gamma_max 0.8
+  --residual_mode both
+  --macro_dropout 0.40
+  --macro_target_projection_mode random
+  --pretrained_finetune_mode all
+  --lambda_load_balance 0.0
+  --lambda_router_z 0.0
+  --lambda_router_entropy 0.0
+  --lambda_expert_diversity 0.0
+  --lambda_router_semantic 0.0
+  --lambda_macro_residual 0.0
+  --lambda_raw_macro_residual 0.05
+  --learning_rate 3.2e-4
+  --weight_decay 4e-4
+  --loss_type mse_mae
+  --mae_weight 3.0
+  --ema_decay 0.0
+  --lr_factor 0.3
+  --lr_patience 4
+  --min_lr 1e-6
+  --epochs 100
+  --patience 8
+  --min_delta 0
+  --device cuda:0
+
+---------------- 96/96 ----------------
+Best MSE/MAE: 0.1724 / 0.2519
+  --pred_len 96
+  --dropout 0.45
+
+---------------- 96/192 ----------------
+Best MSE/MAE: 0.2378 / 0.2944
+  --pred_len 192
+  --dropout 0.45
+
+---------------- 96/336 ----------------
+Best MSE/MAE: 0.2979 / 0.3338
+  --pred_len 336
+
+---------------- 96/720 ----------------
+Best MSE/MAE: 0.4024 / 0.3948
+  --pred_len 720
